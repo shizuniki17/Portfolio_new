@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bryan Batan | Full-Stack Developer</title>
+    <style>
+      :root {
+        --bg: #0f1117;
+        --bg-soft: #161922;
+        --card: #1c202b;
+        --text: #e9ebf1;
+        --muted: #9aa3b2;
+        --accent: #6ee7b7;
+        --accent2: #60a5fa;
+        --border: #2a2f3d;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* NAV */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 8%;
+        background: rgba(15, 17, 23, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        font-weight: 700;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+      }
+      .nav-links a {
+        font-size: 0.95rem;
+        color: var(--muted);
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 8%;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -200px;
+        right: -200px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(110, 231, 183, 0.15),
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+      .hero-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+        width: 100%;
+      }
+      .hero-text {
+        flex: 1.3;
+      }
+      .hero-photo {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-photo img {
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--border);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      }
+      .photo-placeholder {
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        border: 2px dashed var(--border);
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 3rem;
+        text-align: center;
+        background: var(--card);
+      }
+      .photo-placeholder span {
+        font-size: 0.8rem;
+        max-width: 160px;
+      }
+      .hero p.greeting {
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+      .hero h1 {
+        font-size: clamp(2.2rem, 6vw, 4rem);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 14px;
+      }
+      .hero h1 .highlight {
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero .subtitle {
+        color: var(--muted);
+        font-size: 1.15rem;
+        max-width: 560px;
+        margin-bottom: 32px;
+      }
+      .btn-group {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 14px 28px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        cursor: pointer;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #0f1117;
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(110, 231, 183, 0.25);
+      }
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      .btn-secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      /* SECTIONS */
+      section {
+        padding: 90px 8%;
+      }
+      .section-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .section-subtitle {
+        color: var(--muted);
+        margin-bottom: 50px;
+        max-width: 600px;
+      }
+
+      /* ABOUT */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 50px;
+        align-items: center;
+      }
+      .about-grid p {
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      .stats {
+        display: flex;
+        gap: 30px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+      .stat-item h3 {
+        font-size: 2rem;
+        color: var(--accent);
+        font-weight: 800;
+      }
+      .stat-item p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0;
+      }
+      .skills-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 30px;
+      }
+      .skills-card h4 {
+        margin-bottom: 18px;
+        font-size: 1.1rem;
+      }
+      .skill-group {
+        margin-bottom: 20px;
+      }
+      .skill-group:last-child {
+        margin-bottom: 0;
+      }
+      .skill-group-label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .pill {
+        font-size: 0.85rem;
+        padding: 6px 14px;
+        border-radius: 20px;
+        background: var(--bg-soft);
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+
+      /* PROJECTS */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+      .project-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        transition:
+          transform 0.25s,
+          border-color 0.25s;
+      }
+      .project-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--accent);
+      }
+      .project-thumb {
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        background: linear-gradient(
+          135deg,
+          rgba(110, 231, 183, 0.15),
+          rgba(96, 165, 250, 0.15)
+        );
+      }
+      .project-body {
+        padding: 22px;
+      }
+      .project-body h3 {
+        margin-bottom: 8px;
+        font-size: 1.15rem;
+      }
+      .project-body p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+      }
+      .tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .tag {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        border-radius: 20px;
+        background: var(--bg-soft);
+        color: var(--accent);
+        border: 1px solid var(--border);
+      }
+      .company-tag {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-style: italic;
+        margin-bottom: 0;
+      }
+      .project-links {
+        display: flex;
+        gap: 16px;
+        font-size: 0.9rem;
+      }
+      .project-links a {
+        color: var(--accent2);
+        font-weight: 600;
+      }
+      .project-links a:hover {
+        color: var(--accent);
+      }
+
+      /* CONTACT */
+      .contact-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 50px;
+        text-align: center;
+      }
+      .contact-box h2 {
+        font-size: 2rem;
+        margin-bottom: 12px;
+      }
+      .contact-box p {
+        color: var(--muted);
+        margin-bottom: 30px;
+      }
+      .contact-links {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .contact-links a {
+        padding: 12px 22px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .contact-links a:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      footer {
+        text-align: center;
+        padding: 30px 8%;
+        color: var(--muted);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border);
+      }
+
+      @media (max-width: 768px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero-content {
+          flex-direction: column-reverse;
+          text-align: center;
+        }
+        .hero-photo img,
+        .photo-placeholder {
+          width: 200px;
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">Bry<span>.dev</span></div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a
+        href="cv.pdf"
+        download
+        class="btn btn-primary"
+        style="padding: 10px 20px"
+        >Download CV</a
+      >
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="greeting">Hello, I'm</p>
+          <h1>
+            Bryan Batan <br />
+            <span>(ブライアン・バタン) </span> <br />
+            <span class="highlight">Full-Stack Developer</span>
+          </h1>
+          <p class="subtitle">
+            I design and build robust, scalable web and software solutions
+            across the full stack — from JavaScript/TypeScript and React.js to
+            Python, C#, and Java ecosystems. 5 years in IT, plus 3 years of
+            non-IT professional experience that sharpen how I solve problems and
+            collaborate.
+          </p>
+          <div class="btn-group">
+            <a href="cv.pdf" download class="btn btn-primary">⬇ Download CV</a>
+            <a href="#projects" class="btn btn-secondary">View Projects</a>
+            <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <div class="photo-placeholder" id="photo-placeholder">
+            📷<span>Add your photo as profile.jpg</span>
+          </div>
+          <img
+            src="assets/images/cv_image.png"
+            alt="Bryan Batan"
+            id="profile-img"
+            style="display: none"
+            onload="
+              this.style.display = 'block';
+              document.getElementById('photo-placeholder').style.display =
+                'none';
+            "
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">
+        A quick look at who I am and what I bring to the table.
+      </p>
+      <div class="about-grid">
+        <div>
+          <p>
+            I am a Fullstack developer with 5 years of experience building web
+            and software solutions, complemented by 3 years of professional
+            experience in non-IT roles. I specialize in JavaScript, TypeScript,
+            Python, C#, and Java, and am proficient with frameworks including
+            React.js, Node.js, Django, Spring Boot, ASP.NET Core, and Blazor.
+          </p>
+          <p>
+            Experienced in databases (PostgreSQL, SQL Server, MongoDB) and
+            DevOps tools (Git, Redmine, Jenkins, Docker, Kubernetes, Amazon S3,
+            Azure DevOps), I have delivered robust, scalable applications in
+            both Agile/Scrum and Waterfall environments. My diverse background
+            enhances my ability to analyze complex problems, collaborate
+            effectively across teams, and design solutions that meet both
+            technical and business requirements.
+          </p>
+          <div class="stats">
+            <div class="stat-item">
+              <h3>5+</h3>
+              <p>Years in IT</p>
+            </div>
+            <div class="stat-item">
+              <h3>3+</h3>
+              <p>Years Non-IT Experience</p>
+            </div>
+            <div class="stat-item">
+              <h3>10+</h3>
+              <p>Projects Completed</p>
+            </div>
+          </div>
+        </div>
+        <div class="skills-card">
+          <h4>Core Skills</h4>
+          <div class="skill-group">
+            <p class="skill-group-label">Languages</p>
+            <div class="pill-row">
+              <span class="pill">JavaScript</span>
+              <span class="pill">TypeScript</span>
+              <span class="pill">Python</span>
+              <span class="pill">C#</span>
+              <span class="pill">Java</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group-label">Frameworks & Libraries</p>
+            <div class="pill-row">
+              <span class="pill">React.js</span>
+              <span class="pill">React Native</span>
+              <span class="pill">Node.js</span>
+              <span class="pill">Django</span>
+              <span class="pill">Spring Boot</span>
+              <span class="pill">ASP.NET Core</span>
+              <span class="pill">Blazor</span>
+              <span class="pill">Remix</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group-label">Databases</p>
+            <div class="pill-row">
+              <span class="pill">SQL Server</span>
+              <span class="pill">PostgreSQL</span>
+              <span class="pill">MongoDB</span>
+              <span class="pill">Prisma</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group-label">Tools & DevOps</p>
+            <div class="pill-row">
+              <span class="pill">Git / Github / Gitlab</span>
+              <span class="pill">Docker</span>
+              <span class="pill">Kubernetes</span>
+              <span class="pill">Jenkins</span>
+              <span class="pill">Azure DevOps</span>
+              <span class="pill">Amazon S3</span>
+              <span class="pill">Redmine</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">
+        A selection of applications I've designed and built throughout my
+        career.
+      </p>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-thumb">🏢</div>
+          <div class="project-body">
+            <h3>Prudential AO Japan</h3>
+            <p>
+              Application support and development for Prudential Life Insurance
+              Japan — handling client requests, troubleshooting, and feature
+              enhancements. Performed testing from unit to system level, updated
+              detailed design documents, and built forecast automation solutions
+              for management reporting.
+            </p>
+            <div class="tags">
+              <span class="tag">Java</span><span class="tag">C#</span
+              ><span class="tag">PostgreSQL</span
+              ><span class="tag">Redmine</span
+              ><span class="tag">Tortoise SVN</span
+              ><span class="tag">Amazon S3</span
+              ><span class="tag">Tera Term</span
+              ><span class="tag">FileZilla</span>
+            </div>
+            <p class="company-tag">Accenture, Inc. · 2024–2025</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">📝</div>
+          <div class="project-body">
+            <h3>Trendsforce</h3>
+            <p>
+              A mobile application enabling employees to log their current tasks
+              in real time, giving team leads clear visibility into individual
+              and project output for better tracking and decision-making.
+            </p>
+            <div class="tags">
+              <span class="tag">React Native</span
+              ><span class="tag">SQL Server</span><span class="tag">Prisma</span
+              ><span class="tag">Python</span><span class="tag">Github</span>
+            </div>
+            <p class="company-tag">Trends and Technologies, Inc. · 2023–2024</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">🔁</div>
+          <div class="project-body">
+            <h3>Balanced Scorecard (Revamp)</h3>
+            <p>
+              Converted the Balanced Scorecard application from Remix to .NET
+              Blazor. Redesigned the database structure for better alignment
+              with business needs and scalability, and mentored a colleague
+              through implementation via knowledge transfer.
+            </p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Ant Design</span
+              ><span class="tag">Node.js</span
+              ><span class="tag">SQL Server</span
+              ><span class="tag">Github</span>
+            </div>
+            <p class="company-tag">Trends Group, Inc. · 2023–2024</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">🚪</div>
+          <div class="project-body">
+            <h3>Trends Onboarding Portal</h3>
+            <p>
+              An onboarding portal supporting Trends' transition to a Microsoft
+              Cloud Solution Provider, enabling enrollment, license management,
+              monitoring, and client requests. Designed the database structure
+              and delivered 40% of the modules, with knowledge transfer to
+              another developer.
+            </p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Ant Design</span
+              ><span class="tag">Node.js</span
+              ><span class="tag">SQL Server</span
+              ><span class="tag">Github</span>
+            </div>
+            <p class="company-tag">Trends and Technologies, Inc. · 2023</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">🔄</div>
+          <div class="project-body">
+            <h3>Chinabank Data Collector & Processor</h3>
+            <p>
+              A pair of middleware applications: one converts Genesys API JSON
+              data into Excel reports, the other inserts those reports into the
+              database. Integrated additional data sources and optimized queries
+              for performance.
+            </p>
+            <div class="tags">
+              <span class="tag">Node.js</span><span class="tag">Python</span
+              ><span class="tag">SQL Server</span><span class="tag">Prisma</span
+              ><span class="tag">Github</span
+              ><span class="tag">Genesys API</span>
+            </div>
+            <p class="company-tag">Trends and Technologies, Inc. · 2022–2023</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">🎯</div>
+          <div class="project-body">
+            <h3>Balanced Scorecard</h3>
+            <p>
+              An on-demand performance tracking system helping team leaders and
+              members monitor KPIs, identify performance gaps, and improve
+              overall output. Developed 80% of the module and designed the
+              database structure based on the BRD.
+            </p>
+            <div class="tags">
+              <span class="tag">Remix</span><span class="tag">Node.js</span
+              ><span class="tag">Tailwind</span
+              ><span class="tag">TypeScript</span
+              ><span class="tag">SQL Server</span><span class="tag">Prisma</span
+              ><span class="tag">Github</span
+              ><span class="tag">Azure DevOps</span
+              ><span class="tag">Redmine</span><span class="tag">Docker</span
+              ><span class="tag">Kubernetes</span
+              ><span class="tag">Jenkins</span>
+            </div>
+            <p class="company-tag">Trends and Technologies, Inc. · 2022–2023</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">🤖</div>
+          <div class="project-body">
+            <h3>Chinabank Chatbot Suite</h3>
+            <p>
+              An admin configuration portal for managing chatbot settings and
+              chat flow, plus a customer-facing FAQ widget with interactive
+              options and live agent handoff. Designed the database structure
+              and resolved legacy bugs to improve stability.
+            </p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Ant Design</span
+              ><span class="tag">Material UI</span
+              ><span class="tag">Node.js</span
+              ><span class="tag">SQL Server</span><span class="tag">Prisma</span
+              ><span class="tag">Github</span><span class="tag">Redmine</span>
+            </div>
+            <p class="company-tag">Trends and Technologies, Inc. · 2022</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">📈</div>
+          <div class="project-body">
+            <h3>Trendsight</h3>
+            <p>
+              A consolidated KPI dashboard pulling data from multiple systems to
+              track company health across sales, business unit output, customer
+              feedback, and product/service quality. Resolved legacy bugs and
+              optimized application performance.
+            </p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Node.js</span
+              ><span class="tag">MongoDB</span><span class="tag">Github</span
+              ><span class="tag">Redmine</span><span class="tag">Docker</span
+              ><span class="tag">Kubernetes</span
+              ><span class="tag">Jenkins</span>
+            </div>
+            <p class="company-tag">Trends and Technologies, Inc. · 2021–2022</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-thumb">📞</div>
+          <div class="project-body">
+            <h3>Callprime</h3>
+            <p>
+              A call accounting web app for creating dynamic reports with
+              chart/table visualizations, and parsing call detail record files
+              for data processing. Migrated from Java to Python and customized
+              for deployment across multiple enterprise clients (CISCO, AVAYA,
+              TV5, ONSEMI, SUNLIFE).
+            </p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Python</span
+              ><span class="tag">SQL Server</span
+              ><span class="tag">Gitlab</span>
+            </div>
+            <p class="company-tag">Trends and Technologies, Inc. · 2021</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-box">
+        <h2>Let's Work Together</h2>
+        <p>
+          I'm open to freelance opportunities and full-time roles. Feel free to
+          reach out!
+        </p>
+        <div class="contact-links">
+          <a href="mailto:bryanbatan17@gmail.com">✉ Email</a>
+          <a href="https://github.com/shizuniki17" target="_blank">🐙 GitHub</a>
+          <a
+            href="https://www.linkedin.com/in/bryan-b-061228241/"
+            target="_blank"
+            >💼 LinkedIn</a
+          >
+          <a href="cv.pdf" download>⬇ Download CV</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2026 Bryan Batan</footer>
+  </body>
+</html>
